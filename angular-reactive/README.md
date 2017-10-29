@@ -6,8 +6,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 You need to install Node.js on your computer. After that, you can execute:
 
-`npm install`: To download and install the dependencies.
-`npm start`: To start the application. You can navigate with your browser to `http://localhost:4200`
+- `npm install`: To download and install the dependencies.
+- `npm start`: To start the application. You can navigate with your browser to `http://localhost:4200`
 
 Make sure you start first the Spring Boot backend app, otherwise this one won't work properly.
 
