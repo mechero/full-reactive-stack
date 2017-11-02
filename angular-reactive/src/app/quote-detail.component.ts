@@ -2,9 +2,9 @@ import { Component, Input } from '@angular/core';
 import { Quote } from './quote';
 
 @Component({
-  selector: 'app-quote-list',
-  templateUrl: './quote-list.component.html'
+  selector: 'app-quote-detail',
+  templateUrl: './quote-detail.component.html'
 })
-export class QuoteListComponent {
+export class QuoteDetailComponent {
   @Input() quote: Quote;
 }

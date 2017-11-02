@@ -3,23 +3,21 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { QuoteReactiveService } from './quote-reactive.service';
-import { QuoteService } from './quote.service';
 import { AppComponent } from './app.component';
 import { QuotesComponent } from './quotes.component';
-import { QuoteListComponent } from './quote-list.component';
+import { QuoteDetailComponent } from './quote-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     QuotesComponent,
-    QuoteListComponent
+    QuoteDetailComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule
   ],
   providers: [
-    QuoteService,
     QuoteReactiveService
   ],
   bootstrap: [AppComponent]
