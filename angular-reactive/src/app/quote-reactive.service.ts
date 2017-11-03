@@ -3,7 +3,6 @@ import { Injectable, OnInit } from '@angular/core';
 
 import { Quote } from './quote';
 
-import { HttpClient } from '@angular/common/http';
 import * as EventSource from 'eventsource';
 import {Observable} from 'rxjs/Observable';
 
@@ -11,8 +10,6 @@ import {Observable} from 'rxjs/Observable';
 export class QuoteReactiveService {
 
   quotes: Quote[] = new Array();
-
-  constructor(private http: HttpClient) {}
 
   getQuoteStream(): Observable<Array<Quote>> {
     return Observable.create((observer) => {
