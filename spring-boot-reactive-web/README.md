@@ -1,5 +1,9 @@
-# Set up
+# Spring Boot Reactive Web
 
-## Mongo DB
+## Running the application
 
-Install Community Version. Create a .bat file to execute it pointing to your data directory.
+Execute `mvnw spring-boot:run`.
+
+## More details
+
+See [parent README file](../README.md) for more details about this application.
