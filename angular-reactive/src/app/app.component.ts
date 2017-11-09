@@ -1,4 +1,3 @@
-import { selector } from 'rxjs/operator/multicast';
 import { SelectControlValueAccessor } from '@angular/forms/src/directives';
 import { QuotesComponent } from './quotes.component';
 import { Component } from '@angular/core';
