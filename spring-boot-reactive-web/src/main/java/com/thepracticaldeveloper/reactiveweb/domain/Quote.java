@@ -28,4 +28,12 @@ public final class Quote {
         return content;
     }
 
+    @Override
+    public String toString() {
+        return "Quote{" +
+                "id='" + id + '\'' +
+                ", book='" + book + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }
