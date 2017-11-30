@@ -1,10 +1,38 @@
-version: '2.1'
+version: "2"
+
 services:
   mongo:
     image: mongo
+    hostname: mongo
     ports:
       - "27017:27017"
     volumes:
       - mongodata:/data/db
+    networks:
+      - network-reactive
+
+  spring-boot-reactive:
+    build:
+      context: ../spring-boot-reactive-web
+    image: spring-boot-reactive-web-tpd
+    environment:
+      - SPRING_DATA_MONGODB_HOST=mongo
+    ports:
+      - "8080:8080"
+    networks:
+      - network-reactive
+
+  angular-reactive:
+    build:
+      context: ../angular-reactive
+    image: angular-reactive-tpd
+    ports:
+      - "80:80"
+    networks:
+      - network-reactive
+
 volumes:
   mongodata:
+
+networks:
+  network-reactive:

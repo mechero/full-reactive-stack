@@ -11,6 +11,7 @@ import reactor.core.publisher.Flux;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -39,8 +40,10 @@ public final class QuijoteDataLoader implements CommandLineRunner {
                     return l++;
                 }
             };
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(getClass().getClassLoader().getResourceAsStream("pg2000.txt")));
             Flux.fromStream(
-                    Files.lines(Paths.get(ClassLoader.getSystemResource("pg2000.txt").toURI())).filter(l -> !l.trim().isEmpty())
+                    bufferedReader.lines().filter(l -> !l.trim().isEmpty())
                             .map(l -> quoteMongoRepository.save(new Quote(String.valueOf(longSupplier.getAsLong()), "El Quijote", l)))
             ).subscribe(m -> log.info("New quote loaded: {}", m.block()));
             log.info("Repository contains now {} entries.", quoteMongoRepository.count().block());
