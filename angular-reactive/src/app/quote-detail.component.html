@@ -1,6 +1,7 @@
 <h2>Quote Details</h2>
-
 <div *ngIf="quote">
-<h3>{{quote.id}} - {{quote.book}}</h3>
-<h5>{{quote.content}}</h5>
+  <blockquote>
+    <p>{{quote.content}}</p>
+    <footer>{{quote.book}} (Quote identifier: {{quote.id}})</footer>
+  </blockquote>
 </div>

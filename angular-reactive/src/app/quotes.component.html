@@ -1,21 +1,27 @@
-<app-quote-detail [quote]="selectedQuote"></app-quote-detail>
-<h4>
-  {{title}}
-</h4>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Quote ID</th>
-      <th>Book</th>
-      <th>Quote content</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let quote of quotes | async" [class.success]="quote === selectedQuote" (click)="onSelect(quote)">
-      <td>{{quote.id}}</td>
-      <td>{{quote.book}}</td>
-      <td>{{quote.content.substr(0, 30)}}...</td>
-    <tr>
-  </tbody>
-</table>
-<div class="message">Click on a quote for more details</div>
+<div class="row">
+  <div class="col-md-8">
+    <h4>
+      {{title}}
+    </h4>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Quote ID</th>
+        <th>Book</th>
+        <th>Quote content</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let quote of quotes | async" [class.success]="quote === selectedQuote" (click)="onSelect(quote)">
+        <td>{{quote.id}}</td>
+        <td>{{quote.book}}</td>
+        <td>{{quote.content.substr(0, 30)}}...</td>
+      <tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-4">
+    <div class="message">Click on a quote for more details</div>
+    <app-quote-detail [quote]="selectedQuote"></app-quote-detail>
+  </div>
+</div>
