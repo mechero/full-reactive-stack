@@ -50,22 +50,4 @@ public final class QuijoteDataLoader implements CommandLineRunner {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        BufferedReader reader = new BufferedReader(new FileReader("./src/main/resources/pg2000.txt"));
-        FileWriter fileWriter = new FileWriter("./src/main/resources/pg2000f.txt");
-        StringJoiner stringJoiner = new StringJoiner(" ");
-        String line = reader.readLine();
-        while (line != null) {
-            if (line.trim().isEmpty() && stringJoiner.length() != 0) {
-                stringJoiner.add("\n");
-                fileWriter.append(stringJoiner.toString());
-                stringJoiner = new StringJoiner(" ");
-            } else if (!line.trim().isEmpty()){
-                stringJoiner.add(line);
-            }
-            line = reader.readLine();
-        }
-        fileWriter.close();
-        reader.close();
-    }
 }
