@@ -1,8 +1,18 @@
 <div class="row">
   <div class="col-md-8">
-    <h4>
-      {{title}}
-    </h4>
+    <p>
+      <label>Pagination:
+        <input type="checkbox" [checked]="pagination" (change)="pagination = !pagination" >
+        <label>Page #: 
+          <input type="text" [(ngModel)]="page" size="2">
+        </label>
+        <label>Page Size:
+          <input type="text" [(ngModel)]="size" size="2">
+        </label>
+      </label>
+      <button (click)="requestQuoteStream()">Reactive Request</button>
+      <button (click)="requestQuoteBlocking()">Blocking Request</button>
+    </p>
     <table class="table">
       <thead>
       <tr>

@@ -1,5 +1,4 @@
-import { log } from 'util';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { Quote } from './quote';
 
@@ -10,12 +9,19 @@ import {Observable} from 'rxjs/Observable';
 export class QuoteReactiveService {
 
   quotes: Quote[] = new Array();
+  url: string = 'http://localhost:8080/quotes-reactive';
+  urlPaged: string = 'http://localhost:8080/quotes-reactive-paged';
 
-  getQuoteStream(): Observable<Array<Quote>> {
+  getQuoteStream(page?: number, size?: number): Observable<Array<Quote>> {
+    this.quotes = new Array();
     return Observable.create((observer) => {
-      let eventSource = new EventSource('http://localhost:8080/quotes');
+      let url = this.url;
+      if (page != null) {
+        url = this.urlPaged + '?page=' + page + '&size=' + size;
+      }
+      let eventSource = new EventSource(url);
       eventSource.onmessage = (event) => {
-        console.log('Received event: ', event);
+        console.debug('Received event: ', event);
         let json = JSON.parse(event.data);
         this.quotes.push(new Quote(json['id'], json['book'], json['content']));
         observer.next(this.quotes);
