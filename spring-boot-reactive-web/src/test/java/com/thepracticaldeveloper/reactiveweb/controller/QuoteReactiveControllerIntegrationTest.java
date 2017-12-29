@@ -6,8 +6,6 @@ import com.thepracticaldeveloper.reactiveweb.repository.QuoteMongoReactiveReposi
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -27,12 +25,10 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class QuoteReactiveControllerIntegrationTest {
 
-    private static final Logger log = LoggerFactory.getLogger(QuoteReactiveControllerIntegrationTest.class);
-
     @MockBean
     private QuoteMongoReactiveRepository quoteMongoReactiveRepository;
 
-    // This one is not needed, but we need to override the real one
+    // This one is not needed, but we need to override the real one to prevent the default behavior
     @MockBean
     private QuijoteDataLoader quijoteDataLoader;
 
@@ -41,19 +37,21 @@ public class QuoteReactiveControllerIntegrationTest {
 
     private WebClient webClient;
 
+    private Flux<Quote> quoteFlux;
+
     @Before
     public void setUp() {
         this.webClient = WebClient.create("http://localhost:" + serverPort);
+        quoteFlux = Flux.just(
+                new Quote("1", "mock-book", "Quote 1"),
+                new Quote("2", "mock-book", "Quote 2"),
+                new Quote("3", "mock-book", "Quote 3"),
+                new Quote("4", "mock-book", "Quote 4"));
     }
 
     @Test
     public void simpleGetRequest() {
         // given
-        Flux<Quote> quoteFlux = Flux.just(
-                new Quote("1", "mock-book", "Quote 1"),
-                new Quote("2", "mock-book", "Quote 2"),
-                new Quote("3", "mock-book", "Quote 3"),
-                new Quote("4", "mock-book", "Quote 4"));
         given(quoteMongoReactiveRepository.findAll()).willReturn(quoteFlux);
 
         // when
@@ -79,11 +77,6 @@ public class QuoteReactiveControllerIntegrationTest {
     @Test
     public void pagedGetRequest() {
         // given
-        Flux<Quote> quoteFlux = Flux.just(
-                new Quote("1", "mock-book", "Quote 1"),
-                new Quote("2", "mock-book", "Quote 2"),
-                new Quote("3", "mock-book", "Quote 3"),
-                new Quote("4", "mock-book", "Quote 4"));
         // In case page=1 and size=2, we mock the result to only the first two elements. Otherwise the Flux will be null.
         given(quoteMongoReactiveRepository.retrieveAllQuotesPaged(PageRequest.of(1, 2)))
                 .willReturn(quoteFlux.take(2));
