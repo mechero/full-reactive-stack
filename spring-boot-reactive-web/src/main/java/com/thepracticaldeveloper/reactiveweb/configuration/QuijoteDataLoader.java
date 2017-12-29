@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 import java.util.function.LongSupplier;
 
 @Component
-public final class QuijoteDataLoader implements CommandLineRunner {
+public class QuijoteDataLoader implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(QuijoteDataLoader.class);
 
