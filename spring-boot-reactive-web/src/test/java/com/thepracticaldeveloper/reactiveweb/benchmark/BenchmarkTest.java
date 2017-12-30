@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -29,11 +29,11 @@ public class BenchmarkTest {
     public void basicTest() throws Exception {
         long start = System.nanoTime();
 
-        RestTemplate restTemplate = new RestTemplate();
+        WebClient webClient = WebClient.create(BASE_URL);
         HashMap<Integer, BenchmarkRequestResult> results = new HashMap<>();
 
         List<Callable<BenchmarkRequestResult>> requestCallableList = IntStream.range(0, NUMBER_OF_REQUESTS)
-                .mapToObj(i -> createMonoRequest(i, restTemplate, BASE_URL + "/quotes-blocking-paged?page=1&size=10"))
+                .mapToObj(i -> createMonoRequest(i, webClient, "/quotes-blocking-paged?page=1&size=10"))
                 .collect(Collectors.toList());
 
         log.info(" ========== Requests created ");
@@ -59,10 +59,10 @@ public class BenchmarkTest {
         log.info(" ========== Benchmark took {} ", Duration.ofNanos(end - start));
     }
 
-    private Callable<BenchmarkRequestResult> createMonoRequest(final int requestId, final RestTemplate restTemplate, final String url) {
+    private Callable<BenchmarkRequestResult> createMonoRequest(final int requestId, final WebClient webClient, final String url) {
         return () -> {
             long start = System.nanoTime();
-            ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+            ResponseEntity<String> responseEntity = webClient.get().uri(url).exchange().block().toEntity(String.class).block();
             long end = System.nanoTime();
             return new BenchmarkRequestResult(requestId, responseEntity, end - start);
         };
