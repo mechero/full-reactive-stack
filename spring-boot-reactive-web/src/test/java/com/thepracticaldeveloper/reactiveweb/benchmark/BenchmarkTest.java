@@ -3,6 +3,7 @@ package com.thepracticaldeveloper.reactiveweb.benchmark;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -21,7 +22,7 @@ public class BenchmarkTest {
     public static final String BASE_URL = "http://localhost:8080";
 
     private static final int PARALLELISM = 100;
-    private static final int NUMBER_OF_REQUESTS = 1000;
+    private static final int NUMBER_OF_REQUESTS = 100;
 
     private final static Logger log = LoggerFactory.getLogger(BenchmarkTest.class);
 
@@ -54,6 +55,12 @@ public class BenchmarkTest {
         log.info(" ========== RESULTS ========== ");
         double avg = results.values().stream().mapToLong(r -> r.getTookTimeNs()).peek(l -> log.info("" + l)).average().getAsDouble();
         log.info("Average time per request: {}", Duration.ofNanos(Math.round(avg)));
+        double successRate = results.values().stream().
+                filter(r -> r.getResponseEntity().getStatusCode().equals(HttpStatus.OK)).count() * 100.0 /
+                results.size();
+        double errorRate = 100.0 - successRate;
+        log.info("Success Rate: {}", successRate);
+        log.info("Error Rate:   {}", errorRate);
 
         long end = System.nanoTime();
         log.info(" ========== Benchmark took {} ", Duration.ofNanos(end - start));
