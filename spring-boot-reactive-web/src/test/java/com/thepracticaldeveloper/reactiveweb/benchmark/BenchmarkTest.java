@@ -57,7 +57,7 @@ public class BenchmarkTest {
 
     @Test
     public void benchmark8RequestReactive() throws Exception {
-        runBenchmark(8, PARALLELISM, "/quotes-blocking-paged?page=1&size=10");
+        runBenchmark(8, PARALLELISM, "/quotes-reactive-paged?page=1&size=10");
     }
 
     @Test
@@ -67,7 +67,7 @@ public class BenchmarkTest {
 
     @Test
     public void benchmark32RequestReactive() throws Exception {
-        runBenchmark(32, PARALLELISM, "/quotes-blocking-paged?page=1&size=10");
+        runBenchmark(32, PARALLELISM, "/quotes-reactive-paged?page=1&size=10");
     }
 
     @Test
