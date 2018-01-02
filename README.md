@@ -1,7 +1,7 @@
 # Full Reactive Stack
 
 This repository contains backend and frontend projects that make use of **Reactive Web** patterns,
-as explained in the [Full Reactive Stack](https://thepracticaldeveloper.com/category/guides/full-reactive-stack/)
+as explained in the [Full Reactive Stack](https://thepracticaldeveloper.com/full-reactive-stack)
 series of posts.
 
 ![Full Reactive Stack Overview](resources/reactive_overview.png)
