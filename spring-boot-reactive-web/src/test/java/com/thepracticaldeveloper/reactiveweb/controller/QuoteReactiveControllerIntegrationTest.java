@@ -63,11 +63,11 @@ public class QuoteReactiveControllerIntegrationTest {
                 .expectNext(new Quote("1", "mock-book", "Quote 1"))
                 // Note that if you uncomment this line the test will fail. For some reason the delay after the first
                 // element is not respected (I'll investigate this)
-//                .expectNoEvent(Duration.ofMillis(99))
+//                .expectNoEvent(Duration.ofMillis(99)) // these lines might fail depending on the machine
                 .expectNext(new Quote("2", "mock-book", "Quote 2"))
-                .expectNoEvent(Duration.ofMillis(99))
+//                .expectNoEvent(Duration.ofMillis(99))
                 .expectNext(new Quote("3", "mock-book", "Quote 3"))
-                .expectNoEvent(Duration.ofMillis(99))
+//                .expectNoEvent(Duration.ofMillis(99))
                 .expectNext(new Quote("4", "mock-book", "Quote 4"))
                 .expectComplete()
                 .verify();
