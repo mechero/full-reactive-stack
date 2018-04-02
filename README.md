@@ -19,7 +19,7 @@ for the complete description of the implementation.
 
 ### Angular Reactive
 
-This simple Angular JS application consumes the controller on the backend side using a reactive approach,
+This simple Angular application consumes the controller on the backend side using a reactive approach,
  Server-Sent Events, so data is loaded on screen as soon as it's available.
 
 [This blog post](https://thepracticaldeveloper.com/2017/11/04/full-reactive-stack-ii-the-angularjs-client/)
@@ -28,14 +28,14 @@ has the full instructions on how it has been implemented.
 ### Docker
 
 The docker folder contains a `docker-compose` file that runs the Mongo database, the backend application
-and the AngularJS application. It also contains a simplified version, `docker-compose-mongo-only.yml`, which
+and the Angular application. It also contains a simplified version, `docker-compose-mongo-only.yml`, which
 runs only the MongoDB instance, in case you want to run the applications without docker.
 
 ## Running the applications with Docker
 
 Make sure to build the applications first:
 
-* For the AngularJS application, run first `npm install` and then `npm run ng build`
+* For the Angular application, run first `npm install` and then `npm run ng build`
 in the `angular-reactive` folder. It generates a `dist` folder.
 * For the Spring Boot application, execute `mvnw clean package` in the `spring-boot-reactive-web` folder.
 That command generates the jar file in the `target` folder.
