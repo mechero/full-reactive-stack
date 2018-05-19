@@ -8,12 +8,12 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class QuoteReactiveService {
 
-  quotes: Quote[] = new Array();
+  quotes: Quote[] = [];
   url: string = 'http://localhost:8080/quotes-reactive';
   urlPaged: string = 'http://localhost:8080/quotes-reactive-paged';
 
   getQuoteStream(page?: number, size?: number): Observable<Array<Quote>> {
-    this.quotes = new Array();
+    this.quotes = [];
     return Observable.create((observer) => {
       let url = this.url;
       if (page != null) {
@@ -26,7 +26,18 @@ export class QuoteReactiveService {
         this.quotes.push(new Quote(json['id'], json['book'], json['content']));
         observer.next(this.quotes);
       };
-      eventSource.onerror = (error) => observer.error('EventSource error: ' + error);
+      eventSource.onerror = (error) => {
+        // readyState === 0 (closed) means the remote source closed the connection,
+        // so we can safely treat it as a normal situation. Another way of detecting the end of the stream
+        // is to insert a special element in the stream of events, which the client can identify as the last one.
+        if(eventSource.readyState === 0) {
+          console.log('The stream has been closed by the server.');
+          eventSource.close();
+          observer.complete();
+        } else {
+          observer.error('EventSource error: ' + error);
+        }
+      }
     });
   }
 
