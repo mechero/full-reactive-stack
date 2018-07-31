@@ -1,10 +1,13 @@
 # Full Reactive Stack [![Build Status](https://travis-ci.org/mechero/full-reactive-stack.svg?branch=master)](https://travis-ci.org/mechero/full-reactive-stack)
 
 This repository contains backend and frontend projects that make use of **Reactive Web** patterns,
-as explained in the [Full Reactive Stack](https://thepracticaldeveloper.com/full-reactive-stack)
-series of posts.
+as explained in the mini book [Full Reactive Stack with Spring Boot 2, WebFlux, MongoDB and Angular](https://leanpub.com/full-reactive) and also in the [Full Reactive Stack series of posts](https://thepracticaldeveloper.com/full-reactive-stack).
 
 ![Full Reactive Stack Overview](resources/reactive_overview.png)
+
+## Get the mini-book
+
+You can get a copy of the mini-book on LeanPub: [Full Reactive Stack with Spring Boot 2, WebFlux, MongoDB and Angular](https://leanpub.com/full-reactive).
 
 ## Components
 
