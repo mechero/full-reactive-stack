@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component
+} from '@angular/core';
 
-import { Quote } from './quote';
-import { QuoteReactiveService } from './quote-reactive.service';
-import { QuoteBlockingService } from './quote-blocking.service';
+import {Quote} from './quote';
+import {QuoteReactiveService} from './quote-reactive.service';
+import {QuoteBlockingService} from './quote-blocking.service';
 
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-component-quotes',
@@ -12,14 +16,15 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: './quotes.component.html'
 })
 export class QuotesComponent {
-  quotes: Observable<Quote[]>;
+
+  quoteArray: Quote[] = [];
   selectedQuote: Quote;
   mode: String;
   pagination: boolean;
   page: number;
   size: number;
 
-  constructor(private quoteReactiveService: QuoteReactiveService, private quoteBlockingService: QuoteBlockingService) {
+  constructor(private quoteReactiveService: QuoteReactiveService, private quoteBlockingService: QuoteBlockingService, private cdr: ChangeDetectorRef) {
     this.mode = "reactive";
     this.pagination = true;
     this.page = 0;
@@ -27,18 +32,25 @@ export class QuotesComponent {
   }
 
   requestQuoteStream(): void {
+    let quoteObservable: Observable<Quote>;
     if (this.pagination === true) {
-      this.quotes = this.quoteReactiveService.getQuoteStream(this.page, this.size);
+      quoteObservable = this.quoteReactiveService.getQuoteStream(this.page, this.size);
     } else {
-      this.quotes = this.quoteReactiveService.getQuoteStream();
+      quoteObservable = this.quoteReactiveService.getQuoteStream();
     }
+    quoteObservable.subscribe(quote => {
+      this.quoteArray.push(quote);
+      this.cdr.detectChanges();
+    });
   }
 
   requestQuoteBlocking(): void {
     if (this.pagination === true) {
-      this.quotes = this.quoteBlockingService.getQuotes(this.page, this.size);
+      this.quoteBlockingService.getQuotes(this.page, this.size)
+        .subscribe(q => this.quoteArray = q);
     } else {
-      this.quotes = this.quoteBlockingService.getQuotes();
+      this.quoteBlockingService.getQuotes()
+        .subscribe(q => this.quoteArray = q);
     }
   }
 

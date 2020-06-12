@@ -15,7 +15,7 @@ public class QuoteReactiveController {
 
     private static final int DELAY_PER_ITEM_MS = 100;
 
-    private QuoteMongoReactiveRepository quoteMongoReactiveRepository;
+    private final QuoteMongoReactiveRepository quoteMongoReactiveRepository;
 
     public QuoteReactiveController(final QuoteMongoReactiveRepository quoteMongoReactiveRepository) {
         this.quoteMongoReactiveRepository = quoteMongoReactiveRepository;

@@ -12,7 +12,7 @@ public class QuoteBlockingController {
 
     private static final int DELAY_PER_ITEM_MS = 100;
 
-    private QuoteMongoBlockingRepository quoteMongoBlockingRepository;
+    private final QuoteMongoBlockingRepository quoteMongoBlockingRepository;
 
     public QuoteBlockingController(final QuoteMongoBlockingRepository quoteMongoBlockingRepository) {
         this.quoteMongoBlockingRepository = quoteMongoBlockingRepository;
