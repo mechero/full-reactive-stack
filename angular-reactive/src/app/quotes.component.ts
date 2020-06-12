@@ -31,7 +31,12 @@ export class QuotesComponent {
     this.size = 50;
   }
 
+  resetData() {
+    this.quoteArray = [];
+  }
+
   requestQuoteStream(): void {
+    this.resetData();
     let quoteObservable: Observable<Quote>;
     if (this.pagination === true) {
       quoteObservable = this.quoteReactiveService.getQuoteStream(this.page, this.size);
@@ -45,6 +50,7 @@ export class QuotesComponent {
   }
 
   requestQuoteBlocking(): void {
+    this.resetData();
     if (this.pagination === true) {
       this.quoteBlockingService.getQuotes(this.page, this.size)
         .subscribe(q => this.quoteArray = q);
