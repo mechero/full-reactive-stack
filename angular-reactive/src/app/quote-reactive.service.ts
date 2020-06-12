@@ -11,7 +11,7 @@ export class QuoteReactiveService {
   urlPaged: string = 'http://localhost:8080/quotes-reactive-paged';
 
   getQuoteStream(page?: number, size?: number): Observable<Quote> {
-    return Observable.create((observer) => {
+    return new Observable<Quote>((observer) => {
       let url = this.url;
       if (page != null) {
         url = this.urlPaged + '?page=' + page + '&size=' + size;

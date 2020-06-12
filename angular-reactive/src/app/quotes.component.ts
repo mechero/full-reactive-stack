@@ -1,14 +1,9 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component
-} from '@angular/core';
-
 import {Quote} from './quote';
 import {QuoteReactiveService} from './quote-reactive.service';
 import {QuoteBlockingService} from './quote-blocking.service';
 
 import {Observable} from 'rxjs';
+import {ChangeDetectorRef, Component} from "@angular/core";
 
 @Component({
   selector: 'app-component-quotes',
@@ -19,7 +14,7 @@ export class QuotesComponent {
 
   quoteArray: Quote[] = [];
   selectedQuote: Quote;
-  mode: String;
+  mode: string;
   pagination: boolean;
   page: number;
   size: number;
