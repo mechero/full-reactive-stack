@@ -75,7 +75,7 @@ public class QuoteBlockingControllerIntegrationTest {
     @Test
     public void pagedGetRequest() {
         // given
-        given(quoteMongoBlockingRepository.retrieveAllQuotesPaged(PageRequest.of(1, 2)))
+        given(quoteMongoBlockingRepository.findAllByIdNotNullOrderByIdAsc(PageRequest.of(1, 2)))
                 .willReturn(quoteList.subList(0, 2));
 
         // when

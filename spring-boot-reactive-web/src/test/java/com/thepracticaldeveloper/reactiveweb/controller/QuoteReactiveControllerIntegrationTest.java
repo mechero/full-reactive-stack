@@ -16,8 +16,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
-import java.time.Duration;
-
 import static org.mockito.BDDMockito.given;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
@@ -78,7 +76,7 @@ public class QuoteReactiveControllerIntegrationTest {
     public void pagedGetRequest() {
         // given
         // In case page=1 and size=2, we mock the result to only the first two elements. Otherwise the Flux will be null.
-        given(quoteMongoReactiveRepository.retrieveAllQuotesPaged(PageRequest.of(1, 2)))
+        given(quoteMongoReactiveRepository.findAllByIdNotNullOrderByIdAsc(PageRequest.of(1, 2)))
                 .willReturn(quoteFlux.take(2));
 
         // when
