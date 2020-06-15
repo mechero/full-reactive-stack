@@ -57,5 +57,6 @@ export class QuotesComponent {
 
   onSelect(quote: Quote): void {
     this.selectedQuote = quote;
+    this.cdr.detectChanges();
   }
 }
