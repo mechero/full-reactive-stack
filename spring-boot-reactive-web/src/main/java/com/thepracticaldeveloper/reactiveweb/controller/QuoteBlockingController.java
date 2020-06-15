@@ -12,7 +12,7 @@ public class QuoteBlockingController {
 
     private static final int DELAY_PER_ITEM_MS = 100;
 
-    private QuoteMongoBlockingRepository quoteMongoBlockingRepository;
+    private final QuoteMongoBlockingRepository quoteMongoBlockingRepository;
 
     public QuoteBlockingController(final QuoteMongoBlockingRepository quoteMongoBlockingRepository) {
         this.quoteMongoBlockingRepository = quoteMongoBlockingRepository;
@@ -28,6 +28,6 @@ public class QuoteBlockingController {
     public Iterable<Quote> getQuotesBlocking(final @RequestParam(name = "page") int page,
                                              final @RequestParam(name = "size") int size) throws Exception {
         Thread.sleep(DELAY_PER_ITEM_MS * size);
-        return quoteMongoBlockingRepository.retrieveAllQuotesPaged(PageRequest.of(page, size));
+        return quoteMongoBlockingRepository.findAllByIdNotNullOrderByIdAsc(PageRequest.of(page, size));
     }
 }

@@ -28,7 +28,7 @@ services:
       context: ../angular-reactive
     image: angular-reactive-tpd
     ports:
-      - "8900:80"
+      - "4200:1827"
     networks:
       - network-reactive
 

@@ -6,7 +6,7 @@ public final class Quote {
     private String book;
     private String content;
 
-    // Empty constructor is needed for Jackson to deserialize JSON
+    // Empty constructor is required by the data layer and JSON de/ser
     public Quote() {
     }
 

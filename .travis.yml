@@ -1,6 +1,6 @@
 language: java
 jdk:
-  - oraclejdk8
+  - openjdk14
 before_script: 
   cd spring-boot-reactive-web
 addons:

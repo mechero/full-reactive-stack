@@ -15,7 +15,7 @@ public class QuoteReactiveController {
 
     private static final int DELAY_PER_ITEM_MS = 100;
 
-    private QuoteMongoReactiveRepository quoteMongoReactiveRepository;
+    private final QuoteMongoReactiveRepository quoteMongoReactiveRepository;
 
     public QuoteReactiveController(final QuoteMongoReactiveRepository quoteMongoReactiveRepository) {
         this.quoteMongoReactiveRepository = quoteMongoReactiveRepository;
@@ -23,14 +23,13 @@ public class QuoteReactiveController {
 
     @GetMapping("/quotes-reactive")
     public Flux<Quote> getQuoteFlux() {
-        // If you want to use a shorter version of the Flux, use take(100) at the end of the statement below
         return quoteMongoReactiveRepository.findAll().delayElements(Duration.ofMillis(DELAY_PER_ITEM_MS));
     }
 
     @GetMapping("/quotes-reactive-paged")
     public Flux<Quote> getQuoteFlux(final @RequestParam(name = "page") int page,
                                     final @RequestParam(name = "size") int size) {
-        return quoteMongoReactiveRepository.retrieveAllQuotesPaged(PageRequest.of(page, size))
+        return quoteMongoReactiveRepository.findAllByIdNotNullOrderByIdAsc(PageRequest.of(page, size))
                 .delayElements(Duration.ofMillis(DELAY_PER_ITEM_MS));
     }
 
