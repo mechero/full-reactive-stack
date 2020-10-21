@@ -2,6 +2,7 @@ package com.thepracticaldeveloper.reactiveweb.controller;
 
 import com.thepracticaldeveloper.reactiveweb.domain.Quote;
 import com.thepracticaldeveloper.reactiveweb.repository.QuoteMongoReactiveRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,15 +12,11 @@ import reactor.core.publisher.Flux;
 import java.time.Duration;
 
 @RestController
+@RequiredArgsConstructor
 public class QuoteReactiveController {
 
-    private static final int DELAY_PER_ITEM_MS = 100;
-
     private final QuoteMongoReactiveRepository quoteMongoReactiveRepository;
-
-    public QuoteReactiveController(final QuoteMongoReactiveRepository quoteMongoReactiveRepository) {
-        this.quoteMongoReactiveRepository = quoteMongoReactiveRepository;
-    }
+    private static final int DELAY_PER_ITEM_MS = 100;
 
     @GetMapping("/quotes-reactive")
     public Flux<Quote> getQuoteFlux() {

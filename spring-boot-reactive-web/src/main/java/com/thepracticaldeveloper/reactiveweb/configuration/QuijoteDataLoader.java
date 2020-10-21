@@ -1,31 +1,24 @@
 package com.thepracticaldeveloper.reactiveweb.configuration;
 
+import com.thepracticaldeveloper.reactiveweb.domain.Quote;
+import com.thepracticaldeveloper.reactiveweb.repository.QuoteMongoReactiveRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.function.Supplier;
 
-import com.thepracticaldeveloper.reactiveweb.domain.Quote;
-import com.thepracticaldeveloper.reactiveweb.repository.QuoteMongoReactiveRepository;
-
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.stereotype.Component;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import reactor.core.publisher.Flux;
-
 @Component
+@Slf4j
+@RequiredArgsConstructor
 public class QuijoteDataLoader implements ApplicationRunner {
 
-    private static final Logger log = LoggerFactory.getLogger(QuijoteDataLoader.class);
-
     private final QuoteMongoReactiveRepository quoteMongoReactiveRepository;
-
-    QuijoteDataLoader(final QuoteMongoReactiveRepository quoteMongoReactiveRepository) {
-        this.quoteMongoReactiveRepository = quoteMongoReactiveRepository;
-    }
 
     @Override
     public void run(final ApplicationArguments args) {
