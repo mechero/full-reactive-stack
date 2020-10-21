@@ -11,6 +11,7 @@ import reactor.core.publisher.Flux;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 @Component
@@ -25,9 +26,9 @@ public class QuijoteDataLoader implements ApplicationRunner {
         if (quoteMongoReactiveRepository.count().block() == 0L) {
             var idSupplier = getIdSequenceSupplier();
             var bufferedReader = new BufferedReader(
-                    new InputStreamReader(getClass()
+                    new InputStreamReader(Objects.requireNonNull(getClass()
                             .getClassLoader()
-                            .getResourceAsStream("pg2000.txt"))
+                            .getResourceAsStream("pg2000.txt")))
             );
             Flux.fromStream(
                     bufferedReader.lines()

@@ -16,14 +16,14 @@ public class QuoteBlockingController {
     private static final int DELAY_PER_ITEM_MS = 100;
 
     @GetMapping("/quotes-blocking")
-    public Iterable<Quote> getQuotesBlocking() throws Exception {
+    public Iterable<Quote> getQuotesBlocking() throws InterruptedException {
         Thread.sleep(DELAY_PER_ITEM_MS * quoteMongoBlockingRepository.count());
         return quoteMongoBlockingRepository.findAll();
     }
 
     @GetMapping("/quotes-blocking-paged")
     public Iterable<Quote> getQuotesBlocking(final @RequestParam(name = "page") int page,
-                                             final @RequestParam(name = "size") int size) throws Exception {
+                                             final @RequestParam(name = "size") int size) throws InterruptedException {
         Thread.sleep(DELAY_PER_ITEM_MS * size);
         return quoteMongoBlockingRepository.findAllByIdNotNullOrderByIdAsc(PageRequest.of(page, size));
     }
