@@ -1,7 +1,9 @@
 package com.thepracticaldeveloper.reactiveweb.controller;
 
 import com.thepracticaldeveloper.reactiveweb.domain.Quote;
-import com.thepracticaldeveloper.reactiveweb.repository.QuoteMongoBlockingRepository;
+import com.thepracticaldeveloper.reactiveweb.repository.jpa.QuoteBlockingRepository;
+import com.thepracticaldeveloper.reactiveweb.repository.jpa.QuoteEntity;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,22 +14,22 @@ public class QuoteBlockingController {
 
     private static final int DELAY_PER_ITEM_MS = 100;
 
-    private final QuoteMongoBlockingRepository quoteMongoBlockingRepository;
+    private final QuoteBlockingRepository quoteBlockingRepository;
 
-    public QuoteBlockingController(final QuoteMongoBlockingRepository quoteMongoBlockingRepository) {
-        this.quoteMongoBlockingRepository = quoteMongoBlockingRepository;
+    public QuoteBlockingController(final QuoteBlockingRepository quoteBlockingRepository) {
+        this.quoteBlockingRepository = quoteBlockingRepository;
     }
 
     @GetMapping("/quotes-blocking")
-    public Iterable<Quote> getQuotesBlocking() throws Exception {
-        Thread.sleep(DELAY_PER_ITEM_MS * quoteMongoBlockingRepository.count());
-        return quoteMongoBlockingRepository.findAll();
+    public Iterable<QuoteEntity> getQuotesBlocking() throws Exception {
+        Thread.sleep(DELAY_PER_ITEM_MS * quoteBlockingRepository.count());
+        return quoteBlockingRepository.findAll();
     }
 
     @GetMapping("/quotes-blocking-paged")
-    public Iterable<Quote> getQuotesBlocking(final @RequestParam(name = "page") int page,
+    public Iterable<QuoteEntity> getQuotesBlocking(final @RequestParam(name = "page") int page,
                                              final @RequestParam(name = "size") int size) throws Exception {
         Thread.sleep(DELAY_PER_ITEM_MS * size);
-        return quoteMongoBlockingRepository.findAllByIdNotNullOrderByIdAsc(PageRequest.of(page, size));
+        return quoteBlockingRepository.findAllByIdNotNullOrderByIdAsc(PageRequest.of(page, size));
     }
 }

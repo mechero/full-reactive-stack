@@ -1,0 +1,9 @@
+{
+    "properties": [
+        {
+            "name": "r2dbc.url",
+            "type": "java.lang.String",
+            "description": "R2DBC connection URL to database"
+        }
+    ]
+}

@@ -1,8 +1,13 @@
 package com.thepracticaldeveloper.reactiveweb.domain;
 
-public final class Quote {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
-    private String id;
+public class Quote {
+
+    private Long id;
     private String book;
     private String content;
 
@@ -10,13 +15,19 @@ public final class Quote {
     public Quote() {
     }
 
-    public Quote(String id, String book, String content) {
+    public Quote(String book, String content) {
+        this.book = book;
+        this.content = content;
+    }
+
+
+    public Quote(Long id, String book, String content) {
         this.id = id;
         this.book = book;
         this.content = content;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
