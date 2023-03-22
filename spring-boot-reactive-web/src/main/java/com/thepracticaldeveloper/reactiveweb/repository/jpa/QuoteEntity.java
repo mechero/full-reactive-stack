@@ -1,31 +1,31 @@
-package com.thepracticaldeveloper.reactiveweb.domain;
-
-import org.springframework.data.relational.core.mapping.Table;
+package com.thepracticaldeveloper.reactiveweb.repository.jpa;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-@Table
-public class Quote {
+@Entity
+@Table(name = "quote")
+public class QuoteEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String book;
     private String content;
 
     // Empty constructor is required by the data layer and JSON de/ser
-    public Quote() {
+    public QuoteEntity() {
     }
 
-    public Quote(String book, String content) {
+    public QuoteEntity(String book, String content) {
         this.book = book;
         this.content = content;
     }
 
-
-    public Quote(Long id, String book, String content) {
+    public QuoteEntity(Long id, String book, String content) {
         this.id = id;
         this.book = book;
         this.content = content;
@@ -54,13 +54,17 @@ public class Quote {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
-        Quote quote = (Quote) o;
+        QuoteEntity quote = (QuoteEntity) o;
 
-        if (id != null ? !id.equals(quote.id) : quote.id != null) return false;
-        if (book != null ? !book.equals(quote.book) : quote.book != null) return false;
+        if (id != null ? !id.equals(quote.id) : quote.id != null)
+            return false;
+        if (book != null ? !book.equals(quote.book) : quote.book != null)
+            return false;
         return content != null ? content.equals(quote.content) : quote.content == null;
     }
 

@@ -24,6 +24,7 @@ public class ReactiveWebApplication {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	public static void main(String[] args) {
+		
 		SpringApplication.run(ReactiveWebApplication.class, args);
 	}
 
