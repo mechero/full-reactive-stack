@@ -30,6 +30,11 @@ export class QuotesComponent {
     this.quoteArray = [];
   }
 
+  pushNewQuote(): void {
+    console.log("create")
+    this.quoteReactiveService.pushNewQuote({book: "coucou", content: "kkkk"});
+  }
+
   requestQuoteStream(): void {
     this.resetData();
     let quoteObservable: Observable<Quote>;

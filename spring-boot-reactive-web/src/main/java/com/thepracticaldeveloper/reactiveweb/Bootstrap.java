@@ -7,13 +7,8 @@ import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.thepracticaldeveloper.reactiveweb.domain.Quote;
-
-import io.r2dbc.spi.ConnectionFactories;
-import io.r2dbc.spi.ConnectionFactoryOptions;
-import static io.r2dbc.spi.ConnectionFactoryOptions.*;
 
 @Component
 public class Bootstrap {
