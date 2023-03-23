@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.function.Supplier;
 
 import com.thepracticaldeveloper.reactiveweb.domain.Quote;
-import com.thepracticaldeveloper.reactiveweb.repository.QuoteMongoReactiveRepository;
+import com.thepracticaldeveloper.reactiveweb.repository.r2dbc.QuoteReactiveRepository;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -21,32 +21,33 @@ public class QuijoteDataLoader implements ApplicationRunner {
 
     private static final Logger log = LoggerFactory.getLogger(QuijoteDataLoader.class);
 
-    private final QuoteMongoReactiveRepository quoteMongoReactiveRepository;
+    private final QuoteReactiveRepository quoteReactiveRepository;
 
-    QuijoteDataLoader(final QuoteMongoReactiveRepository quoteMongoReactiveRepository) {
-        this.quoteMongoReactiveRepository = quoteMongoReactiveRepository;
+    QuijoteDataLoader(final QuoteReactiveRepository quoteReactiveRepository) {
+        this.quoteReactiveRepository = quoteReactiveRepository;
     }
 
     @Override
     public void run(final ApplicationArguments args) {
-        if (quoteMongoReactiveRepository.count().block() == 0L) {
-            var idSupplier = getIdSequenceSupplier();
-            var bufferedReader = new BufferedReader(
-                    new InputStreamReader(getClass()
-                            .getClassLoader()
-                            .getResourceAsStream("pg2000.txt"))
-            );
-            Flux.fromStream(
-                    bufferedReader.lines()
-                            .filter(l -> !l.trim().isEmpty())
-                            .map(l -> quoteMongoReactiveRepository.save(
-                                    new Quote(idSupplier.get(),
-                                            "El Quijote", l))
-                            )
-            ).subscribe(m -> log.info("New quote loaded: {}", m.block()));
-            log.info("Repository contains now {} entries.",
-                    quoteMongoReactiveRepository.count().block());
-        }
+        
+        // if (quoteReactiveRepository.count().block() == 0L) {
+        //     var idSupplier = getIdSequenceSupplier();
+        //     var bufferedReader = new BufferedReader(
+        //             new InputStreamReader(getClass()
+        //                     .getClassLoader()
+        //                     .getResourceAsStream("pg2000.txt"))
+        //     );
+        //     Flux.fromStream(
+        //             bufferedReader.lines()
+        //                     .filter(l -> !l.trim().isEmpty())
+        //                     .map(l -> quoteReactiveRepository.save(
+        //                             new Quote(idSupplier.get(),
+        //                                     "El Quijote", l))
+        //                     )
+        //     ).subscribe(m -> log.info("New quote loaded: {}", m.block()));
+        //     log.info("Repository contains now {} entries.",
+        //             quoteReactiveRepository.count().block());
+        // }
     }
 
     private Supplier<String> getIdSequenceSupplier() {

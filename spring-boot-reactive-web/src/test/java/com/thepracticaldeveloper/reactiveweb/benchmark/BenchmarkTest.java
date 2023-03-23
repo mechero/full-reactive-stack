@@ -1,7 +1,7 @@
 package com.thepracticaldeveloper.reactiveweb.benchmark;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * It's recommended that you discard the fist execution results since they could include some warming up of the server.
  */
-@Ignore
+@Disabled
 public class BenchmarkTest {
 
     private static final int PARALLELISM = 32;

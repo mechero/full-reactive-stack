@@ -1,9 +1,9 @@
-import {Quote} from './quote';
-import {QuoteReactiveService} from './quote-reactive.service';
-import {QuoteBlockingService} from './quote-blocking.service';
+import { Quote } from './quote';
+import { QuoteReactiveService } from './quote-reactive.service';
+import { QuoteBlockingService } from './quote-blocking.service';
 
-import {Observable} from 'rxjs';
-import {ChangeDetectorRef, Component} from "@angular/core";
+import { Observable } from 'rxjs';
+import { ChangeDetectorRef, Component } from "@angular/core";
 
 @Component({
   selector: 'app-component-quotes',
@@ -12,12 +12,16 @@ import {ChangeDetectorRef, Component} from "@angular/core";
 })
 export class QuotesComponent {
 
+  newQuoteDialogOpen = false;
   quoteArray: Quote[] = [];
   selectedQuote: Quote;
   mode: string;
   pagination: boolean;
   page: number;
   size: number;
+
+  newQuoteBook: string = "";
+  newQuoteContent: string = "";
 
   constructor(private quoteReactiveService: QuoteReactiveService, private quoteBlockingService: QuoteBlockingService, private cdr: ChangeDetectorRef) {
     this.mode = "reactive";
@@ -28,6 +32,15 @@ export class QuotesComponent {
 
   resetData() {
     this.quoteArray = [];
+  }
+
+  pushNewQuote(): void {
+    console.log("create")
+    this.quoteReactiveService.pushNewQuote({ book: this.newQuoteBook ?? "a book", content: this.newQuoteContent ?? "quote content" });
+
+    this.newQuoteBook = "";
+    this.newQuoteContent = "";
+    this.newQuoteDialogOpen = false;
   }
 
   requestQuoteStream(): void {

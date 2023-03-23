@@ -2,13 +2,23 @@ import { Injectable } from '@angular/core';
 
 import { Quote } from './quote';
 
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class QuoteReactiveService {
-
+  
   url: string = 'http://localhost:8080/quotes-reactive';
   urlPaged: string = 'http://localhost:8080/quotes-reactive-paged';
+  
+  constructor(private http: HttpClient) {
+  }
+
+  pushNewQuote(quoteData: Partial<Quote>) {
+    return this.http.post(this.url, quoteData).subscribe(() => {
+      console.log("done");
+    })
+  }
 
   getQuoteStream(page?: number, size?: number): Observable<Quote> {
     return new Observable<Quote>((observer) => {
@@ -27,7 +37,7 @@ export class QuoteReactiveService {
         // so we can safely treat it as a normal situation. Another way
         // of detecting the end of the stream is to insert a special element
         // in the stream of events, which the client can identify as the last one.
-        if(eventSource.readyState === 0) {
+        if (eventSource.readyState === 0) {
           console.log('The stream has been closed by the server.');
           eventSource.close();
           observer.complete();

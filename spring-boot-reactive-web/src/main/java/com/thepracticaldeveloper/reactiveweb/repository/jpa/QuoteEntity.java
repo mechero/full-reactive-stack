@@ -1,26 +1,31 @@
-package com.thepracticaldeveloper.reactiveweb.domain;
+package com.thepracticaldeveloper.reactiveweb.repository.jpa;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-@Table
-public class Quote {
+@Entity
+@Table(name = "quote")
+public class QuoteEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String book;
     private String content;
 
     // Empty constructor is required by the data layer and JSON de/ser
-    public Quote() {
+    public QuoteEntity() {
     }
 
-    public Quote(String book, String content) {
+    public QuoteEntity(String book, String content) {
         this.book = book;
         this.content = content;
     }
 
-    public Quote(Long id, String book, String content) {
+    public QuoteEntity(Long id, String book, String content) {
         this.id = id;
         this.book = book;
         this.content = content;
@@ -54,7 +59,7 @@ public class Quote {
         if (o == null || getClass() != o.getClass())
             return false;
 
-        Quote quote = (Quote) o;
+        QuoteEntity quote = (QuoteEntity) o;
 
         if (id != null ? !id.equals(quote.id) : quote.id != null)
             return false;
@@ -69,17 +74,5 @@ public class Quote {
         result = 31 * result + (book != null ? book.hashCode() : 0);
         result = 31 * result + (content != null ? content.hashCode() : 0);
         return result;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setBook(String book) {
-        this.book = book;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 }
