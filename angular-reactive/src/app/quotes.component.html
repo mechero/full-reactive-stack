@@ -13,7 +13,7 @@
       <button (click)="requestQuoteStream()">Reactive Request</button>
       <button (click)="requestQuoteBlocking()">Blocking Request</button>
 
-      <button (click)="pushNewQuote()">Push quote 🚀</button>
+      <button (click)="newQuoteDialogOpen = true">Push quote 🚀</button>
       
     </p>
     <table class="table">
@@ -38,3 +38,24 @@
     <app-quote-detail [quote]="selectedQuote"></app-quote-detail>
   </div>
 </div>
+
+<dialog id="newQuoteDialog" [open]="newQuoteDialogOpen" >
+  <form method="dialog">
+    <div>
+      Book title:
+    </div>
+    <div>
+      <input type="text" [(ngModel)]="newQuoteBook" />
+    </div>
+    <div>
+      Review:
+    </div>
+    <div>
+      <input type="text" [(ngModel)]="newQuoteContent" />
+    </div>
+    <menu>
+      <button value="cancel" (click)="newQuoteDialogOpen = false">Cancel</button>
+      <button value="default" (click)="pushNewQuote()">Send</button>
+    </menu>
+  </form>
+</dialog>
